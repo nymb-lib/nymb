@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="AGENTS.md" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Nymb/Nymb.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Nymb.Tests/Nymb.Tests.csproj" />
+  </Folder>
+</Solution>

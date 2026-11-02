@@ -1,0 +1,26 @@
+name: .NET
+
+on:
+  push:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.x
+
+      - name: Restore
+        run: dotnet restore Nymb.slnx
+
+      - name: Build
+        run: dotnet build Nymb.slnx --no-restore
+
+      - name: Test
+        run: dotnet test Nymb.slnx --no-build
