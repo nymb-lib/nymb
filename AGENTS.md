@@ -7,6 +7,9 @@
   `test/Nymb.Tests`.
 - The test project uses xUnit v3 with Microsoft.Testing.Platform.
 - Nullable reference types and implicit usings are enabled in both projects.
+- For C# code, use the latest language features supported by the project's
+  target framework and the .NET SDK selected by `global.json`; use older
+  syntax only when compatibility requires it.
 
 ## Common commands
 
