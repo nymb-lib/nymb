@@ -1,0 +1,41 @@
+#!/bin/sh
+
+commit_message_file=${1:-}
+
+if [ "${OS:-}" = "Windows_NT" ]; then
+  hook_dir=$(dirname -- "$0")
+  if command -v powershell.exe >/dev/null 2>&1; then
+    exec powershell.exe -NoProfile -File "$hook_dir/commit-msg.ps1" "$commit_message_file"
+  elif command -v pwsh.exe >/dev/null 2>&1; then
+    exec pwsh.exe -NoProfile -File "$hook_dir/commit-msg.ps1" "$commit_message_file"
+  fi
+fi
+
+if [ -z "$commit_message_file" ] || [ ! -r "$commit_message_file" ]; then
+  printf '%s\n' \
+    'ERROR: Cannot read the commit message.' \
+    'Git must pass the commit message file as the first argument.'
+  exit 1
+fi
+
+subject=$(sed -n '1p' "$commit_message_file")
+
+if ! printf '%s\n' "$subject" | grep -Eq '^(feat|fix|docs|test|refactor|chore)(\([A-Za-z0-9][A-Za-z0-9./_-]*\))?!?: [^[:space:]].*'; then
+  printf '%s\n' \
+    '' \
+    'ERROR: Invalid commit message.' \
+    '' \
+    'Allowed types: feat, fix, docs, test, refactor, chore.' \
+    '' \
+    'The subject must follow the Conventional Commits format:' \
+    '  <type>[optional scope][!]: <description>' \
+    '' \
+    'Examples:' \
+    '  feat: add tokenization support' \
+    '  fix(lexer): handle empty input' \
+    '  refactor(parser)!: simplify expression parsing' \
+    '' \
+    'Use one of the allowed types, then a colon and a non-empty description.'
+  printf 'Your subject: %s\n\n' "$subject"
+  exit 1
+fi
