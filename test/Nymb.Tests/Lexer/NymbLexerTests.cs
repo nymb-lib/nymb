@@ -71,7 +71,7 @@ public class NymbLexerTests
     }
 
     [Fact]
-    public void Repeated_tokenization_returns_the_same_tokens()
+    public void Lexer_is_deterministic_by_default()
     {
         var lexer = new NymbLexer("word (value)", [';']);
 

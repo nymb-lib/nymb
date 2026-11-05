@@ -47,10 +47,10 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
             switch (character)
             {
                 case '(':
-                    tokens.Add(ReadParenthesis(TokenType.OpenParenthesis));
+                    tokens.Add(ReadSingleCharacter(TokenType.OpenParenthesis));
                     break;
                 case ')':
-                    tokens.Add(ReadParenthesis(TokenType.CloseParenthesis));
+                    tokens.Add(ReadSingleCharacter(TokenType.CloseParenthesis));
                     break;
                 case '\'':
                 case '"':
@@ -58,7 +58,7 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
                     break;
                 default:
                     tokens.Add(delimiters.Contains(character)
-                        ? ReadDelimiter()
+                        ? ReadSingleCharacter(TokenType.Delimiter)
                         : ReadWord(start));
                     break;
             }
@@ -79,22 +79,13 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
         return new Token(TokenType.Whitespace, value, value, new SourceSpan(start, CurrentPosition));
     }
 
-    private Token ReadParenthesis(TokenType type)
+    private Token ReadSingleCharacter(TokenType type)
     {
         var start = CurrentPosition;
         var value = input[_offset].ToString();
         Advance();
 
         return new Token(type, value, value, new SourceSpan(start, CurrentPosition));
-    }
-
-    private Token ReadDelimiter()
-    {
-        var start = CurrentPosition;
-        var value = input[_offset].ToString();
-        Advance();
-
-        return new Token(TokenType.Delimiter, value, value, new SourceSpan(start, CurrentPosition));
     }
 
     private Token ReadQuotedText()
