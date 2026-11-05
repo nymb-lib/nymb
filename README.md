@@ -13,9 +13,9 @@ Commit subjects must follow the Conventional Commits format:
 Allowed types are `feat`, `fix`, `docs`, `test`, `refactor`, and `chore`.
 For example: `feat(lexer): support escaped characters`. The `!` marker before
 the colon indicates a breaking change. The `.githooks/commit-msg` Git hook
-checks each commit subject. On Windows, it uses the included PowerShell
-implementation when `powershell.exe` or `pwsh.exe` is available. Enable the
-hook once in each clone with:
+checks each commit subject. Git for Windows runs it using its bundled `sh`
+shell, so no additional runtime is needed. Enable the hook once in each clone
+with:
 
 ```sh
 git config core.hooksPath .githooks

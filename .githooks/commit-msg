@@ -2,15 +2,6 @@
 
 commit_message_file=${1:-}
 
-if [ "${OS:-}" = "Windows_NT" ]; then
-  hook_dir=$(dirname -- "$0")
-  if command -v powershell.exe >/dev/null 2>&1; then
-    exec powershell.exe -NoProfile -File "$hook_dir/commit-msg.ps1" "$commit_message_file"
-  elif command -v pwsh.exe >/dev/null 2>&1; then
-    exec pwsh.exe -NoProfile -File "$hook_dir/commit-msg.ps1" "$commit_message_file"
-  fi
-fi
-
 if [ -z "$commit_message_file" ] || [ ! -r "$commit_message_file" ]; then
   printf '%s\n' \
     'ERROR: Cannot read the commit message.' \
