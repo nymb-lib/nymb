@@ -4,6 +4,8 @@
     <File Path="AGENTS.md" />
     <File Path="global.json" />
     <File Path="LICENSE" />
+    <File Path="Nymb.sln.DotSettings" />
+    <File Path="Nymb.sln.DotSettings.user" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
