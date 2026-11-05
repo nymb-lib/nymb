@@ -3,8 +3,8 @@
 ## Solution
 
 - Use the .NET SDK selected by `global.json`.
-- The solution is `Nymb.slnx`. Production code is in `src/Nymb`; tests are in
-  `test/Nymb.Tests`.
+- The solution is `Nymb.slnx`. Production code is in `src/`; tests are in
+  `test/`.
 - The test project uses xUnit v3 with Microsoft.Testing.Platform.
 - Nullable reference types and implicit usings are enabled in both projects.
 - For C# code, use the latest language features supported by the project's
