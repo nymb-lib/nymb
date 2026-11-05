@@ -37,6 +37,8 @@ other tests.
 - Make tests repeatable: do not depend on execution order, shared mutable state,
   wall-clock timing, or external services unless the test explicitly exercises
   that integration.
+- Keep tests isolated and focused so a small behavior change ideally fails only
+  the test for that behavior; its name should make the changed behavior clear.
 - Assert externally observable results. Keep setup and actions easy to find;
   use Arrange/Act/Assert structure when it improves clarity, not as a rigid
   template.
