@@ -43,10 +43,22 @@ public class NymbLexerTests
     public void Token_spans_track_offsets_and_lines_across_carriage_return_line_feed()
     {
         var tokens = new NymbLexer("one\r\ntwo").Tokenize();
+        
+        var startOfFirstToken = new SourcePosition(0, 1, 1);
+        var endOfFirstToken = new SourcePosition(3, 1, 4);
+        var firstTokenSpan = new SourceSpan(startOfFirstToken, endOfFirstToken);
 
-        Assert.Equal(new SourceSpan(new SourcePosition(0, 1, 1), new SourcePosition(3, 1, 4)), tokens[0].Span);
-        Assert.Equal(new SourceSpan(new SourcePosition(3, 1, 4), new SourcePosition(5, 2, 1)), tokens[1].Span);
-        Assert.Equal(new SourceSpan(new SourcePosition(5, 2, 1), new SourcePosition(8, 2, 4)), tokens[2].Span);
+        var startOfLineBreak = new SourcePosition(3, 1, 4);
+        var endOfLineBreak = new SourcePosition(5, 2, 1);
+        var lineBreakSpan = new SourceSpan(startOfLineBreak, endOfLineBreak);
+
+        var startOfSecondToken = new SourcePosition(5, 2, 1);
+        var endOfSecondToken = new SourcePosition(8, 2, 4);
+        var secondTokenSpan = new SourceSpan(startOfSecondToken, endOfSecondToken);
+
+        Assert.Equal(firstTokenSpan, tokens[0].Span);
+        Assert.Equal(lineBreakSpan, tokens[1].Span);
+        Assert.Equal(secondTokenSpan, tokens[2].Span);
         Assert.Equal("\r\n", tokens[1].Value);
     }
 

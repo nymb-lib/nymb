@@ -40,6 +40,9 @@ other tests.
 - Assert externally observable results. Keep setup and actions easy to find;
   use Arrange/Act/Assert structure when it improves clarity, not as a rigid
   template.
+- Keep assertions easy to read as plain-English statements. Assign nontrivial
+  expected values to descriptively named variables instead of constructing
+  them inline in an assertion.
 - Use a theory when several inputs illustrate the same behavior; use separate
   facts when the scenarios verify meaningfully different behavior.
 
