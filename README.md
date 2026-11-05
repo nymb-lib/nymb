@@ -20,3 +20,6 @@ hook once in each clone with:
 ```sh
 git config core.hooksPath .githooks
 ```
+
+GitHub Actions also checks commit messages on pushes and pull requests using
+`commitlint.config.mjs`.
