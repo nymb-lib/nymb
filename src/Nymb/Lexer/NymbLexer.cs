@@ -54,12 +54,12 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
                     break;
                 case '\'':
                 case '"':
-                    tokens.Add(ReadQuotedText());
+                    tokens.Add(ReadStringLiteral());
                     break;
                 default:
                     tokens.Add(delimiters.Contains(character)
                         ? ReadSingleCharacter(TokenType.Delimiter)
-                        : ReadWord(start));
+                        : ReadBareToken(start));
                     break;
             }
         }
@@ -88,7 +88,7 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
         return new Token(type, value, value, new SourceSpan(start, CurrentPosition));
     }
 
-    private Token ReadQuotedText()
+    private Token ReadStringLiteral()
     {
         var start = CurrentPosition;
         var quote = input[_offset];
@@ -145,7 +145,7 @@ file class TokenizationRun(string input, HashSet<char> delimiters)
         throw new FormatException(FormatDiagnostic("Unterminated quoted string", errorSpan));
     }
 
-    private Token ReadWord(SourcePosition start)
+    private Token ReadBareToken(SourcePosition start)
     {
         var valueStart = _offset;
         while (_offset < input.Length &&
