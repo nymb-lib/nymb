@@ -1,10 +1,11 @@
+using System.Collections.Frozen;
 using System.Text;
 
 namespace Nymb.Lexer;
 
 internal sealed class NymbLexer
 {
-    private readonly HashSet<char> _delimiters;
+    private readonly FrozenSet<char> _delimiters;
     private readonly string _input;
 
     public NymbLexer(string input, IEnumerable<char>? delimiters = null)
@@ -21,7 +22,7 @@ internal sealed class NymbLexer
     }
 }
 
-file class TokenizationRun(string input, HashSet<char> delimiters)
+file class TokenizationRun(string input, FrozenSet<char> delimiters)
 {
     private int _column = 1;
     private int _line = 1;
