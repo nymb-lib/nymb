@@ -10,6 +10,18 @@ public class NymbLexerTests
         Assert.Empty(new NymbLexer("").Tokenize());
     }
 
+    [Theory]
+    [InlineData("\n", "\n")]
+    [InlineData("\r", "\r")]
+    [InlineData("\r\n", "\r\n")]
+    public void Line_break_characters_are_whitespace_tokens(string lineBreak, string expectedValue)
+    {
+        var tokens = new NymbLexer(lineBreak).Tokenize();
+        var whitespaceToken = Assert.Single(tokens);
+
+        AssertToken(whitespaceToken, TokenType.Whitespace, expectedValue, expectedValue);
+    }
+
     [Fact]
     public void Input_is_split_into_words_whitespace_delimiters_and_parentheses()
     {
