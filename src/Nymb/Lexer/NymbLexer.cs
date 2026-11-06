@@ -1,28 +1,27 @@
-using System.Collections.Frozen;
 using System.Text;
 
 namespace Nymb.Lexer;
 
 internal sealed class NymbLexer
 {
-    private readonly FrozenSet<char> _delimiters;
+    private readonly NymbLexerConfiguration _configuration;
     private readonly string _input;
 
-    public NymbLexer(string input, IEnumerable<char>? delimiters = null)
+    public NymbLexer(string input, NymbLexerConfiguration? configuration = null)
     {
         ArgumentNullException.ThrowIfNull(input);
 
         _input = input;
-        _delimiters = delimiters is null ? [] : [.. delimiters];
+        _configuration = configuration ?? NymbLexerConfiguration.Default;
     }
 
     public List<Token> Tokenize()
     {
-        return new TokenizationRun(_input, _delimiters).Tokenize();
+        return new TokenizationRun(_input, _configuration).Tokenize();
     }
 }
 
-file class TokenizationRun(string input, FrozenSet<char> delimiters)
+file class TokenizationRun(string input, NymbLexerConfiguration configuration)
 {
     private int _column = 1;
     private int _line = 1;
@@ -58,7 +57,7 @@ file class TokenizationRun(string input, FrozenSet<char> delimiters)
                     tokens.Add(ReadStringLiteral());
                     break;
                 default:
-                    tokens.Add(delimiters.Contains(character)
+                    tokens.Add(configuration.Delimiters.Contains(character)
                         ? ReadSingleCharacter(TokenType.Delimiter)
                         : ReadBareToken(start));
                     break;
@@ -151,7 +150,7 @@ file class TokenizationRun(string input, FrozenSet<char> delimiters)
         var valueStart = _offset;
         while (_offset < input.Length &&
                !char.IsWhiteSpace(input[_offset]) &&
-               !delimiters.Contains(input[_offset]) &&
+               !configuration.Delimiters.Contains(input[_offset]) &&
                input[_offset] is not '(' and not ')' and not '\'' and not '"')
             Advance();
 

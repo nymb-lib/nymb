@@ -13,7 +13,8 @@ public class NymbLexerTests
     [Fact]
     public void Input_is_split_into_words_whitespace_delimiters_and_parentheses()
     {
-        var tokens = new NymbLexer("(foo = bar)\n", ['=']).Tokenize();
+        var lexerConfiguration = NymbLexerConfiguration.Default with { Delimiters = ['='] };
+        var tokens = new NymbLexer("(foo = bar)\n", lexerConfiguration).Tokenize();
 
         Assert.Collection(
             tokens,
@@ -53,7 +54,8 @@ public class NymbLexerTests
     [Fact]
     public void Lexer_is_deterministic_by_default()
     {
-        var lexer = new NymbLexer("word (value)", [';']);
+        var lexerConfiguration = NymbLexerConfiguration.Default with { Delimiters = [';'] };
+        var lexer = new NymbLexer("word (value)", lexerConfiguration);
 
         Assert.Equal(lexer.Tokenize(), lexer.Tokenize());
     }
