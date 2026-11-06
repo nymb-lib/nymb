@@ -41,6 +41,12 @@ file class TokenizationRun(string input, NymbLexerConfiguration configuration)
                 continue;
             }
 
+            if (char.IsControl(input[_offset]))
+            {
+                var sourceSpan = new SourceSpan(CurrentPosition, CurrentPosition);
+                throw new FormatException(FormatDiagnostic("Not allowed control character", sourceSpan));
+            }
+
             var start = CurrentPosition;
             var character = input[_offset];
 
@@ -127,17 +133,22 @@ file class TokenizationRun(string input, NymbLexerConfiguration configuration)
             Advance();
             var escapedValue = escapedCharacter switch
             {
-                '\\' => '\\',
-                '\'' => '\'',
-                '"' => '"',
-                'n' => '\n',
-                'r' => '\r',
-                't' => '\t',
-                '0' => '\0',
+                '"' => '"',     // double quote
+                '\'' => '\'',   // single quote
+                '\\' => '\\',   // backslash
+                't' => '\t',    // horizontal tab
+                'r' => '\r',    // carriage return
+                'n' => '\n',    // line feed
+                'a' => '\a',    // alert (bell)
+                'b' => '\b',    // backspace
+                'f' => '\f',    // form feed
+                'v' => '\v',    // vertical tab
+                '0' => '\0',    // nul character (NUL)
                 _ => throw new FormatException(FormatDiagnostic(
                     $"Invalid escape sequence '\\{escapedCharacter}'",
                     new SourceSpan(escapeStart, CurrentPosition)))
             };
+
             value.Append(escapedValue);
         }
 

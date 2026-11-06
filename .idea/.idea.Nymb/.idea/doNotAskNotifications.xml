@@ -3,6 +3,8 @@
   <component name="DoNotAskProjectManager">
     <option name="idToDisplayName">
       <map>
+        <entry key="git.push.result" value="" />
+        <entry key="git.rebase.stopped.due.to.conflicts" value="Rebase stopped due to conflicts" />
         <entry key="vcs.commit.finished" value="2 files committed" />
         <entry key="vcs.commit.finished.initial" value="15 files committed" />
       </map>
