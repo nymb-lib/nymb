@@ -10,7 +10,6 @@ public class NymbLexerEscapingTests
         // The backslash says that this quote is content, not the end of the string.
         const string input = """
                              "say \"hello\""
-                             
                              """;
         
         const string expectedValue = """
