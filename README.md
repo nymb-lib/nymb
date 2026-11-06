@@ -23,3 +23,10 @@ git config core.hooksPath .githooks
 
 GitHub Actions also checks commit messages on pushes and pull requests using
 `commitlint.config.mjs`.
+
+## Branch names
+
+Use `<type>/<short-kebab-case-description>` for branch names, for example
+`feat/login-page`, `fix/navbar-overflow`, or `chore/update-dependencies`.
+Common types include `feat`, `fix`, `chore`, `refactor`, `docs`, `test`, and
+`perf`. Ticket IDs are optional, e.g. `feat/#142-user-profile`.

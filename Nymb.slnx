@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path="AGENTS.md" />
+    <File Path="commitlint.config.mjs" />
     <File Path="global.json" />
     <File Path="LICENSE" />
     <File Path="Nymb.sln.DotSettings" />
