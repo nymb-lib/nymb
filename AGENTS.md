@@ -27,8 +27,8 @@ changed.
 
 ## Tests
 
-When adding or renaming tests, follow the test-naming skill in
-[`.github/skills/test-naming/SKILL.md`](.github/skills/test-naming/SKILL.md).
+When adding or renaming tests, follow the test-writing skill in
+[`.github/skills/test-writing/SKILL.md`](.github/skills/test-writing/SKILL.md).
 Apply it to every test you create; do not introduce a competing naming
 convention.
 
