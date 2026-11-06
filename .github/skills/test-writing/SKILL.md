@@ -1,6 +1,6 @@
 ---
-name: test-naming
-description: Use when creating or renaming automated tests, to name them after the behavior they verify.
+name: test-writing
+description: Use when creating or changing automated tests, to guide test design, naming, and tutorial-style organization.
 ---
 
 # Writing and naming tests
@@ -47,5 +47,22 @@ other tests.
   them inline in an assertion.
 - Use a theory when several inputs illustrate the same behavior; use separate
   facts when the scenarios verify meaningfully different behavior.
+- Keep tests easy to debug, even when that takes a few more lines. Store
+  intermediate results in descriptively named local variables instead of
+  nesting meaningful operations inside assertions. For example, assign the
+  tokenization result to `tokens` before asserting that it contains one token;
+  this makes the complete result easy to inspect in a debugger.
+
+## Tests as tutorials
+
+- For test classes intended to teach a behavior, write the tests as
+  documentation and learning material, not only as regression checks.
+- Order those tests from the simplest concept to progressively more difficult
+  cases so a reader can work through the file from top to bottom.
+- Make each test's name and any necessary short explanation clarify what the
+  example teaches and why the behavior matters.
+- When a component has several substantial responsibilities, give each
+  responsibility its own focused test class. For example, keep lexer escaping
+  tests separate from bare-token tests.
 
 Source: [You are naming your tests wrong!](https://enterprisecraftsmanship.com/posts/you-naming-tests-wrong/)

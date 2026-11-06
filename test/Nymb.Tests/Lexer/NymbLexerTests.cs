@@ -28,22 +28,10 @@ public class NymbLexerTests
     }
 
     [Fact]
-    public void Quoted_strings_decode_supported_escapes_and_preserve_raw_text()
-    {
-        var tokens = new NymbLexer("\"a\\n\\t\\\\\\\"b\" 'c\\'d'").Tokenize();
-
-        Assert.Collection(
-            tokens,
-            token => AssertToken(token, TokenType.StringLiteral, "a\n\t\\\"b", "\"a\\n\\t\\\\\\\"b\""),
-            token => AssertToken(token, TokenType.Whitespace, " ", " "),
-            token => AssertToken(token, TokenType.StringLiteral, "c'd", "'c\\'d'"));
-    }
-
-    [Fact]
     public void Token_spans_track_offsets_and_lines_across_carriage_return_line_feed()
     {
         var tokens = new NymbLexer("one\r\ntwo").Tokenize();
-        
+
         var startOfFirstToken = new SourcePosition(0, 1, 1);
         var endOfFirstToken = new SourcePosition(3, 1, 4);
         var firstTokenSpan = new SourceSpan(startOfFirstToken, endOfFirstToken);
@@ -63,31 +51,11 @@ public class NymbLexerTests
     }
 
     [Fact]
-    public void Quoted_strings_preserve_unescaped_carriage_return_line_feed()
-    {
-        var token = Assert.Single(new NymbLexer("\"first\r\nsecond\"").Tokenize());
-
-        Assert.Equal("first\r\nsecond", token.Value);
-    }
-
-    [Fact]
     public void Lexer_is_deterministic_by_default()
     {
         var lexer = new NymbLexer("word (value)", [';']);
 
         Assert.Equal(lexer.Tokenize(), lexer.Tokenize());
-    }
-
-    [Theory]
-    [InlineData("\"unterminated", "Unterminated quoted string at line 1, column 1.")]
-    [InlineData("'valid' \"bad\\q\"", "Invalid escape sequence '\\q' at line 1, column 13.")]
-    [InlineData("'trailing\\", "Unterminated escape sequence at line 1, column 10.")]
-    public void Invalid_quoted_strings_report_the_source_location(string input, string diagnostic)
-    {
-        var exception = Assert.Throws<FormatException>(() => new NymbLexer(input).Tokenize());
-
-        Assert.Contains(diagnostic, exception.Message);
-        Assert.Contains('↑', exception.Message);
     }
 
     private static void AssertToken(Token token, TokenType type, string value, string rawValue)
