@@ -11,11 +11,11 @@ public class NymbLexerEscapingTests
         const string input = """
                              "say \"hello\""
                              """;
-        
+
         const string expectedValue = """
                                      say "hello"
                                      """;
-        
+
         var tokens = new NymbLexer(input).Tokenize();
         var token = Assert.Single(tokens);
 
